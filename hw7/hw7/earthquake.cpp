@@ -1,4 +1,5 @@
-
+#include "earthquake.h"
+#include "station.h"
 
 string get_Month_Num2namestr (Months aa) {
 	switch (aa) {
@@ -154,6 +155,8 @@ bool check_input_header(ifstream &inputfile, ofstream &outputifle) {
 	getline(inputfile, line);
 	stringstream eventID (line);
 	eventID >> eq_info.id;
+
+	
 
 	getline(inputfile, line);
 	stringstream datetime (line);
