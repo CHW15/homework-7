@@ -1,129 +1,230 @@
+#include "earthquake.h"
+#include "station.h"
 
+using namespace std;
 
-
-// Check the table of reports from input file and return the signals output
-bool check_input_signals(ifstream & inputfile, station entry[MAXvalidentry], int valid_entries, int invalidEntries, int produced_signalnum) {
-
-	int entry_pos = 0;
-
-	ofstream logfile;
-	ofstream outputfile;
-	string net_code, Station_Name, band_type, inst_type, orientation;
-	string string;
-
-	// check the stored data validation
-
-	while (valid_entries < MAXvalidentry) {             // or wile inputfile.eof()
-
-		int m = -1;
-
-		cout << "reading signals";
-
-		inputfile >> net_code;
-
-		entry_pos++;
-
-		if (!is_valid_Network_code(net_code)) {
-			print_message(logfile, "Error: Entry # ");
-			print_position(logfile, entry_pos);
-			print_message(logfile, "ignored. Invalid_Network_code");
-			m++;
-			return true;
-		}
-
-		cout << entry_pos;
-
-		entry_pos++;
-		inputfile >> Station_Name;
-		if (!is_valid_Station_code(Station_Name)) {
-			print_message(logfile, "Error: Entry # ");
-			print_position(logfile, entry_pos);
-			print_message(logfile, "ignored. Invalid_Station_code");
-			m++;
-			return true;
-		}
-
-		entry_pos++;
-		inputfile >> band_type;
-		if ( !is_valid_Type_of_band(band_type)) {
-			print_message(logfile, "Error: Entry # ");
-			print_position(logfile, entry_pos);
-			print_message(logfile, "ignored. Invalid Type_of_band");
-			m++;
-			return true;
-		}
-
-		entry_pos++;
-		inputfile >> inst_type;
-		if ( !is_valid_Type_of_instrument(inst_type)) {
-			print_message(logfile, "Error: Entry # ");
-			print_position(logfile, entry_pos);
-			print_message(logfile, "ignored. Invalid Type_of_band");
-			m++;
-			return true;
-		}
-
-		entry_pos++;
-		inputfile >> orientation;
-		if ( !is_valid_Orientation(orientation)) {
-			print_message(logfile, "Error: Entry # ");
-			print_position(logfile, entry_pos);
-			print_message(logfile, "ignored. as an invalid Orientation");
-			m++;
-			return true;
-		}
-
-		if (m = (-1)) {
-
-			valid_entries++;
-			produced_signalnum = produced_signalnum + orientation.size(); 
-
-			entry[valid_entries].net_code     =  str2Net_code(net_code);
-			entry[valid_entries].Station_Name =  Station_Name;
-			entry[valid_entries].band_type    =  str2Band_Type(band_type);
-			entry[valid_entries].inst_type    =  Inst_Type_str2enum(inst_type);
-			entry[valid_entries].orientation  =  orientation;
-
-			return true;
-
-		} else {
-			invalidEntries++;
-		}
-		return false;
-	}
+string uppercase(string & s) {
+	string result = s;
+	for (int i = 0; i < (int)result.size(); i++)
+		result[i] = toupper(result[i]);
+	return result;
 }
 
-void print_output(ofstream & outputfile, ofstream & logfile, station entry[MAXvalidentry], int valid_entries, int invalidEntries, int produced_signalnum) {
+//**************************************************/
 
-	string orientation;
-	int length = orientation.length();
-	int length1 = abs (length);
+bool station::set_valid_Network_code(station & entry, string Net_code) {          // mashkukam be in?!
 
+	if (Net_code.compare("CE") == 0) {
+		entry.net_code = CE;
+		return true;
+	}
 
-	// print all the signals to the output file
-	for (int i = 0; i < valid_entries; i++) {
-		for (int j = 0; j < length1; j++) {
+	if (Net_code.compare("CI") == 0) {
+		entry.net_code = CI;
+		return true;
+	}
 
-			stringstream records;
-			records << entry[valid_entries].net_code << ".";
-			records << entry[valid_entries].Station_Name << ".";
-			records << entry[valid_entries].band_type;
-			records << entry[valid_entries].inst_type;
-			records << entry[valid_entries].orientation[j] << endl;
+	if (Net_code.compare("FA") == 0) {
+		entry.net_code = FA;
+		return true;
+	}
 
-			outputfile << records.str();
-			cout << records.str();
+	if (Net_code.compare("NP") == 0) {
+		entry.net_code = NP;
+		return true;
+	}
+
+	if (Net_code.compare("WR") == 0) {
+		entry.net_code = WR;
+		return true;
+	}
+
+	else return false;
+}
+
+string station::get_Net_code2namestr(station & entry) {
+	switch (entry.net_code) {
+	case CE:   return "CE";
+	case CI:   return "CI";
+	case FA:   return "FA";
+	case NP:   return "NP";
+	case WR:   return "WR";
+	}
+	// It should never get here!!
+	exit(EXIT_FAILURE);
+}
+
+Net_code station::str2Net_code(string nt){
+
+	string ss = uppercase(nt);                                         // bayad case sensitive bashad ke pas !?
+
+	if (ss == "CE")  return CE;
+	if (ss == "CI")  return CI;
+	if (ss == "FA")  return FA;
+	if (ss == "NP")  return NP;
+	if (ss == "WR")  return WR;
+
+	// It should never get here!!
+	exit(EXIT_FAILURE);
+}
+
+//**************************************************/
+
+bool station::set_valid_Station_code(station & entry, string Stati_code) {
+
+	// 3 capital alphabetic character or 5 numeric characters
+
+	if (Stati_code.length() == 5) {
+		for (int i = 0; i < 4; i++) {
+			if (isdigit(Stati_code[i])) {
+				entry.Station_Name = Stati_code;
+				return true;
+			}
 		}
 	}
 
-	outputfile << valid_entries << "\n";
-	print_message(logfile, "invalid entries ignored:");
-	print_position(logfile, invalidEntries);
-	print_message(logfile, "valid entries read:");
-	print_position(logfile, valid_entries);
-	print_message(logfile, "signal name produced");
-	print_position(logfile, cout, produced_signalnum);
-	print_message(logfile, "Finished!");
+	if (Stati_code.length() == 3) {
+		for (int i = 0; i < 4; i++) {
+			if (isalpha(Stati_code[i])) {
+				if (isupper(Stati_code[i])) {
+					entry.Station_Name = Stati_code;
+					return true;
+				}
+			}
+		}
+	}	
 
-	outputfile.close();
+	return false;
+}
+
+string station::get_Station_code(station & entry) {
+	return entry.Station_Name;
+}
+
+//**************************************************/
+
+bool station::set_valid_Type_of_band(station & entry, string Band_type) {
+
+	string ss = uppercase(Band_type);
+	if (ss == "LONG-PERIOD") {
+		entry.band_type = LongPeriod;
+		return true;
+	}
+	if (ss == "SHORT-PERIOD") {
+		entry.band_type = ShortPeriod;
+		return true;
+	}
+	if (ss == "BROADBAND") {
+		entry.band_type = Broadband;
+		return true;
+	}
+	return false;
+}
+
+string station::get_Type_of_band2str(station & entry) {
+	switch (entry.band_type) {
+	case LongPeriod:   return "L";
+	case ShortPeriod:  return "B";
+	case Broadband:    return "H";
+	}
+	// It should never get here!!
+	exit(EXIT_FAILURE);
+}
+
+Band_Type station::str2Band_Type(string d) {
+
+	string ss = uppercase(d);
+
+	if (ss == "LONG-PERIOD")  
+		return LongPeriod;
+	else if (ss == "SHORT_PERIOD")  
+		return ShortPeriod;
+	else 
+		return Broadband;
+
+	// It should never get here!!
+	//exit(EXIT_FAILURE);
+}
+
+//**************************************************/
+
+bool station::set_valid_Type_of_instrument(station & entry, string instrumenType) {
+
+	string ss = uppercase(instrumenType);
+	if (ss == "HIGH-GAIN") {
+		entry.inst_type = HighGain;
+		return true;
+	}
+	if (ss == "LOW-GAIN") {
+		entry.inst_type = LowGain;
+		return true;
+	}
+	if (ss == "ACCELEROMETER") {
+		entry.inst_type = Accelerometer;
+		return true;
+	}
+	return false;
+}
+
+string station::get_Inst_Type2str(station & entry) {
+	switch (entry.inst_type) {
+	case HighGain:       return "H";
+	case LowGain:        return "L";
+	case Accelerometer:  return "N";
+	}
+	// It should never get here!!
+	exit(EXIT_FAILURE);
+}
+
+
+
+Inst_Type station::Inst_Type_str2enum (string e){
+
+	string ss = uppercase(e);
+
+	if (ss == "HIGH-GAIN")  return HighGain;
+	else if (ss == "LOW-GAIN")  return LowGain;
+	else return Accelerometer;
+
+}
+
+//**************************************************/
+
+bool station::set_valid_Orientation(station & entry, string orientation) {
+
+	// It is case insensitive so convert it to the uppercase and compare it
+
+	string ss = uppercase(orientation);
+	int length = ss.length();
+	int length1 = abs(length);
+
+	if (length1 < 4) {
+		if (isdigit(ss[0])) {
+			for (int i = 0; i < length1; i++) {
+				if (!isdigit(ss[i])) {
+					return false;
+				}
+			}
+
+			entry.orientation = ss;
+
+			return true;
+		}
+		else if (isalpha(ss[0])) {
+			for (int i = 0; i < length1; i++) {
+				if (ss[i] != 'N' && ss[i] != 'E' && ss[i] != 'Z') {
+					return false;
+				}
+			}
+
+			entry.orientation = ss;
+
+			return true;
+		}
+	}
+	return false;
+}
+
+string station::get_Orientation(station & entry) {
+	return entry.orientation;
 }
