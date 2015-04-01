@@ -62,11 +62,12 @@ void set_magnitude_type(earthquake &, ofstream &, string);
 string get_Month_Num2namestr(Months);
 string get_mag_type2str(Mag_type);
 string uppercase(string &);
-string get_eventid(earthquake);
-string get_date(earthquake &);
-string get_time(earthquake &);
-string get_magnitude_size(earthquake &);
-string get_mag_type2str(earthquake, string);
+string get_eventid();
+string get_date();
+string get_time();
+string get_time_zone() {
+string get_magnitude_size();
+string get_mag_type2str(string);
 string get_Net_code2namestr(station &);
 string get_Type_of_band2str(station &);
 string get_Station_code(station &);
@@ -199,7 +200,7 @@ bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
 
 	inputfile.ignore();
 	getline(inputfile, line);
-	eq_info.earthquake_name = line;
+	eq_info.earthquake_name(line);
 
 	// Fourth line for epicenter info
 
@@ -218,8 +219,8 @@ bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
 	// Print the header in the outputfile:
 
 	outputfile << "# " << " " << get_Month_Num2namestr(month_num2enum(mm)) << " " << day << " " << year << " "
-		<< eq_info.time << " " << eq_info.timeZone << " " << eq_info.magnitude_type << " " << eq_info.magnitude_size
-		<< " " << eq_info.earthquake_name << " " << "[" << eq_info.id << "]" << "("
+		<< eq_info.get_time << " " << eq_info.get_time_zone << " " << eq_info.get_mag_type2str << " " << eq_info.get_magnitude_size
+		<< " " << eq_info.get_earthquake_name << " " << "[" << eq_info.id << "]" << "("
 		<< eq_info.longitude << "," << " " << eq_info.latitude << "," << " " << eq_info.depth << ")" << "\n";
 
 	return 0;

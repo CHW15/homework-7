@@ -56,11 +56,11 @@ public:
 	Inst_Type Inst_Type_str2enum(string);
 
 private:
-	Net_code     net_code;
-	string       Station_Name;
-	Band_Type    band_type;
-	Inst_Type    inst_type;
-	string  orientation;
+	Net_code    net_code;
+	string      Station_Name;
+	Band_Type   band_type;
+	Inst_Type   inst_type;
+	string      orientation;
 };
 
 //**************************************************/

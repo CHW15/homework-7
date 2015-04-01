@@ -51,15 +51,15 @@ string earthquake::uppercase(string & s) {
 
 //**************************************************/
 
-void earthquake::set_eventid(earthquake& eq_info, ifstream & inputfile, string line) {
+void earthquake::set_eventid(ifstream & inputfile, string line) {
 
 	//stringstream eventID (line);
-	eq_info.id = line;
+	id = line;
 	//eq_info.id = line;
 }
 
-string earthquake::get_eventid(earthquake & eq_info) {
-	return eq_info.id;
+string earthquake::get_eventid() {
+	return id;
 }
 
 //**************************************************/
@@ -108,7 +108,7 @@ void earthquake::set_date(earthquake & eq_info, ofstream & logfile, string & dat
 			//exit (EXIT_FAILURE);
 		}
 
-		eq_info.date = date;
+		date = date;
 
 		/*
 		Date.year = year;
@@ -122,13 +122,13 @@ void earthquake::set_date(earthquake & eq_info, ofstream & logfile, string & dat
 	}
 }
 
-string earthquake::get_date(earthquake & eq_info) {
-	return eq_info.date;
+string earthquake::get_date() {
+	return date;
 }
 
 //**************************************************/
 
-void earthquake::set_time(earthquake & eq_info, ofstream & logfile, string time, string & hour, string & minute, string & second) {
+void earthquake::set_time(ofstream & logfile, string time, string & hour, string & minute, string & second) {
 
 	int hr, min;
 	float  sec = 0;
@@ -172,7 +172,7 @@ void earthquake::set_time(earthquake & eq_info, ofstream & logfile, string time,
 			//exit (EXIT_FAILURE);
 		}
 
-		eq_info.time = time;
+		time = time;
 
 		// (Or I could add another struct for time and use atoi(.c_str) command to convert the string into integer
 		// and but it needs more set and get functions which I prefered to learn compile and run completely
@@ -189,13 +189,13 @@ void earthquake::set_time(earthquake & eq_info, ofstream & logfile, string time,
 	}
 }
 
-string earthquake::get_time(earthquake & eq_info) {
-	return eq_info.time;
+string earthquake::get_time() {
+	return time;
 }
 
 //**************************************************/
 
-void earthquake::set_time_zone(earthquake & eq_info, ofstream & logfile, string time_zone) {
+void earthquake::set_time_zone(ofstream & logfile, string time_zone) {
 
 	int tzl = 0;
 	string str = time_zone;
@@ -205,17 +205,17 @@ void earthquake::set_time_zone(earthquake & eq_info, ofstream & logfile, string 
 		print_message(logfile, "Error: Time_zone is not valid");
 		//exit (EXIT_FAILURE);
 	} else {
-		eq_info.timeZone = time_zone;
+		timeZone = time_zone;
 	}
 }
 
-string earthquake::get_time_zone(earthquake & eq_info) {
-	return eq_info.timeZone;
+string earthquake::get_time_zone() {
+	return timeZone;
 }
 
 //**************************************************/
 
-void earthquake::set_magnitude_size(earthquake & eq_info, ofstream & logfile, string magnitude_size) {
+void earthquake::set_magnitude_size(ofstream & logfile, string magnitude_size) {
 
 	int mag_size;
 	stringstream mg;
@@ -226,34 +226,33 @@ void earthquake::set_magnitude_size(earthquake & eq_info, ofstream & logfile, st
 		print_message(logfile, "Error: The magnitude_size is not valid");
 		//exit (EXIT_FAILURE);
 	} else {
-		eq_info.magnitude_size = magnitude_size;
+		magnitude_size = magnitude_size;
 	}
 }
 
-string earthquake::get_magnitude_size(earthquake & eq_info) {
-	return eq_info.magnitude_size;
+string earthquake::get_magnitude_size() {
+	return magnitude_size;
 }
 
 //**************************************************/
 
-void earthquake::set_magnitude_type(earthquake & eq_info, ofstream & logfile, string magnitude_type) {
+void earthquake::set_magnitude_type(ofstream & logfile, string magnitude_type) {
 
 	// cout << magnitude_type;
 	string mt = uppercase(magnitude_type);
-
-
-	if (mt == "ML") { eq_info.magnitude_type = ML; }
-	if (mt == "MS") { eq_info.magnitude_type = Ms; }
-	if (mt == "MB") { eq_info.magnitude_type = Mb; }
-	if (mt == "MW") { eq_info.magnitude_type = Mw; }
+	
+	if (mt == "ML") { magnitude_type = ML; }
+	if (mt == "MS") { magnitude_type = Ms; }
+	if (mt == "MB") { magnitude_type = Mb; }
+	if (mt == "MW") { magnitude_type = Mw; }
 
 	//print_message(logfile, "Error: The magnitude_type is not valid");
 	//exit (EXIT_FAILURE);
 }
 
-string earthquake::get_mag_type2str(earthquake eq_info, string magnitude_type) {
+string earthquake::get_mag_type2str(string magnitude_type) {
 
-	switch (eq_info.magnitude_type) {
+	switch (magnitude_type) {
 
 	case ML:  return "Ml";
 	case Mb:  return "Mb";

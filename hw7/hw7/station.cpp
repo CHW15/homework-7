@@ -12,38 +12,38 @@ string uppercase(string & s) {
 
 //**************************************************/
 
-bool station::set_valid_Network_code(station & entry, string Net_code) {          // mashkukam be in?!
+bool station::set_valid_Network_code(string Net_code) {          // mashkukam be in?!
 
 	if (Net_code.compare("CE") == 0) {
-		entry.net_code = CE;
+		net_code = CE;
 		return true;
 	}
 
 	if (Net_code.compare("CI") == 0) {
-		entry.net_code = CI;
+		net_code = CI;
 		return true;
 	}
 
 	if (Net_code.compare("FA") == 0) {
-		entry.net_code = FA;
+		net_code = FA;
 		return true;
 	}
 
 	if (Net_code.compare("NP") == 0) {
-		entry.net_code = NP;
+		net_code = NP;
 		return true;
 	}
 
 	if (Net_code.compare("WR") == 0) {
-		entry.net_code = WR;
+		net_code = WR;
 		return true;
 	}
 
 	else return false;
 }
 
-string station::get_Net_code2namestr(station & entry) {
-	switch (entry.net_code) {
+string station::get_Net_code2namestr() {
+	switch (net_code) {
 	case CE:   return "CE";
 	case CI:   return "CI";
 	case FA:   return "FA";
@@ -70,14 +70,14 @@ Net_code station::str2Net_code(string nt){
 
 //**************************************************/
 
-bool station::set_valid_Station_code(station & entry, string Stati_code) {
+bool station::set_valid_Station_code(string Stati_code) {
 
 	// 3 capital alphabetic character or 5 numeric characters
 
 	if (Stati_code.length() == 5) {
 		for (int i = 0; i < 4; i++) {
 			if (isdigit(Stati_code[i])) {
-				entry.Station_Name = Stati_code;
+				Station_Name = Stati_code;
 				return true;
 			}
 		}
@@ -87,7 +87,7 @@ bool station::set_valid_Station_code(station & entry, string Stati_code) {
 		for (int i = 0; i < 4; i++) {
 			if (isalpha(Stati_code[i])) {
 				if (isupper(Stati_code[i])) {
-					entry.Station_Name = Stati_code;
+					Station_Name = Stati_code;
 					return true;
 				}
 			}
@@ -97,32 +97,32 @@ bool station::set_valid_Station_code(station & entry, string Stati_code) {
 	return false;
 }
 
-string station::get_Station_code(station & entry) {
-	return entry.Station_Name;
+string station::get_Station_code() {
+	return Station_Name;
 }
 
 //**************************************************/
 
-bool station::set_valid_Type_of_band(station & entry, string Band_type) {
+bool station::set_valid_Type_of_band(string Band_type) {
 
 	string ss = uppercase(Band_type);
 	if (ss == "LONG-PERIOD") {
-		entry.band_type = LongPeriod;
+		band_type = LongPeriod;
 		return true;
 	}
 	if (ss == "SHORT-PERIOD") {
-		entry.band_type = ShortPeriod;
+		band_type = ShortPeriod;
 		return true;
 	}
 	if (ss == "BROADBAND") {
-		entry.band_type = Broadband;
+		band_type = Broadband;
 		return true;
 	}
 	return false;
 }
 
-string station::get_Type_of_band2str(station & entry) {
-	switch (entry.band_type) {
+string station::get_Type_of_band2str() {
+	switch (band_type) {
 	case LongPeriod:   return "L";
 	case ShortPeriod:  return "B";
 	case Broadband:    return "H";
@@ -148,26 +148,26 @@ Band_Type station::str2Band_Type(string d) {
 
 //**************************************************/
 
-bool station::set_valid_Type_of_instrument(station & entry, string instrumenType) {
+bool station::set_valid_Type_of_instrument(string instrumenType) {
 
 	string ss = uppercase(instrumenType);
 	if (ss == "HIGH-GAIN") {
-		entry.inst_type = HighGain;
+		inst_type = HighGain;
 		return true;
 	}
 	if (ss == "LOW-GAIN") {
-		entry.inst_type = LowGain;
+		inst_type = LowGain;
 		return true;
 	}
 	if (ss == "ACCELEROMETER") {
-		entry.inst_type = Accelerometer;
+		inst_type = Accelerometer;
 		return true;
 	}
 	return false;
 }
 
-string station::get_Inst_Type2str(station & entry) {
-	switch (entry.inst_type) {
+string station::get_Inst_Type2str() {
+	switch (inst_type) {
 	case HighGain:       return "H";
 	case LowGain:        return "L";
 	case Accelerometer:  return "N";
@@ -190,7 +190,7 @@ Inst_Type station::Inst_Type_str2enum (string e){
 
 //**************************************************/
 
-bool station::set_valid_Orientation(station & entry, string orientation) {
+bool station::set_valid_Orientation(string orientation) {
 
 	// It is case insensitive so convert it to the uppercase and compare it
 
@@ -206,7 +206,7 @@ bool station::set_valid_Orientation(station & entry, string orientation) {
 				}
 			}
 
-			entry.orientation = ss;
+			orientation = ss;
 
 			return true;
 		}
@@ -217,7 +217,7 @@ bool station::set_valid_Orientation(station & entry, string orientation) {
 				}
 			}
 
-			entry.orientation = ss;
+			orientation = ss;
 
 			return true;
 		}
@@ -225,6 +225,6 @@ bool station::set_valid_Orientation(station & entry, string orientation) {
 	return false;
 }
 
-string station::get_Orientation(station & entry) {
-	return entry.orientation;
+string station::get_Orientation() {
+	return orientation;
 }
