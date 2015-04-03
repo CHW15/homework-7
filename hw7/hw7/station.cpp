@@ -242,8 +242,9 @@ string station::get_Orientation() {
 }
 
 // Check the table of reports from input file and return the signals output
-void read_input_signals(ifstream & inputfile, ofstream& outputfile, station (&entry)[MAXvalidentry], int  & valid_entries, int & invalidEntries, int & produced_signalnum) {
+void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entry[MAXvalidentry], int  & valid_entries, int & invalidEntries, int & produced_signalnum) {
 
+	static const int MAXvalidentry = 300;
 	int entry_pos = 0;
 
 	ofstream logfile;

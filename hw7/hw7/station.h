@@ -59,7 +59,7 @@ private:
 	string      orientation;
 };
 
-void read_input_signals(ifstream &, ofstream &, station *, int  &, int &, int &);
+void read_input_signals(ifstream &, ofstream &, station , int  &, int &, int &);
 void print_output(ofstream &, ofstream &, station *, int &, int &, int &);
 
 #endif

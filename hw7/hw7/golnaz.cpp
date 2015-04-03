@@ -40,6 +40,9 @@ using namespace std;
 
 int main() {
 
+	string inputfilename;
+	const string logfilename = "golnaz.log";
+
 	string station_code;
 	ifstream inputfile;
 	ofstream outputfile, logfile;

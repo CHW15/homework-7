@@ -24,11 +24,6 @@
 
 using namespace std;
 
-static const int MAXvalidentry = 300;
-
-string inputfilename;
-const string logfilename = "golnaz.log";
-
 void open_file(ofstream &, ostream &, string);
 void open_input(ifstream &, ofstream &, ostream &, string);
 void print_message(ofstream &, const string &);
