@@ -22,6 +22,8 @@
 
 #include "LNK2005errorpass.h"
 
+static const int MAXvalidentry = 300;
+
 using namespace std;
 
 void open_file(ofstream &, ostream &, string);
