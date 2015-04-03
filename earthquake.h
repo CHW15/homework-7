@@ -1,14 +1,13 @@
 // earthquake class provides functions and parameters 
 // in order to read the input header and check if it is valid
 
-#ifndef EARTHQUAKE_H
-#define EARTHQUAKE_H
+#ifndef EARTHQUAKE_H_
+#define EARTHQUAKE_H_
 
-//#include <cstring>
+#include <string>
 #include "mutualfunctions.h"
-#include "LNK2005errorpass.h"
 
-//using namespace std;
+using namespace std;
 
 enum Months {
 	January = 1, February, March, April, May, June, July,
@@ -35,6 +34,7 @@ public:
 	void set_time_zone(ofstream &, string);
 	void set_magnitude_size(ofstream &, string);
 	void set_magnitude_type(ofstream &, string);
+	void print_message(ofstream &, const string &);
 
 	double get_latitude();
 	double get_longitude();

@@ -1,13 +1,12 @@
 // station class provides functions and parameters 
 // in order to read the signal reports from input
 
-#ifndef STATION_H
-#define STATION_H
+#ifndef STATION_H_
+#define STATION_H_
 
-//#include <cstring>
+#include <string>
 #include "earthquake.h"
-#include "LNK2005errorpass.h"
-//#include "mutualfunctions.h"
+#include "mutualfunctions.h"
 
 using namespace std;
 
@@ -46,6 +45,7 @@ public:
 	string get_Station_code();
 	string get_Inst_Type2str();
 	string get_Orientation();
+	string uppercase(string &);
 
 	Net_code str2Net_code(string);
 	Band_Type str2Band_Type(string);

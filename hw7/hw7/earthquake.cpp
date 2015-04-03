@@ -1,5 +1,22 @@
+/*
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include <ostream>
+#include <cstdlib>
+#include <sstream>
+#include <istream>
+#include <stdio.h>
+#include <vector>
+#include <stdlib.h>
+#include <numeric>
+#include <cstring>
+#include <cctype>
+*/
 #include "earthquake.h"
 #include "station.h"
+
 
 using namespace std;
 
@@ -21,8 +38,7 @@ string earthquake::get_Month_Num2namestr(Months aa) {
 	exit(EXIT_FAILURE);
 }
 
-Months 
-month_num2enum(int a){
+Months month_num2enum(int a){
 
 	if (a == 1)  return January;
 	if (a == 2)  return February;
@@ -42,16 +58,7 @@ month_num2enum(int a){
 
 //**************************************************/
 
-string earthquake::uppercase(string & s) {
-	string result = s;
-	for (int i = 0; i < (int)result.size(); i++)
-		result[i] = toupper(result[i]);
-	return result;
-}
-
-//**************************************************/
-
-void earthquake::set_eventid(ifstream & inputfile, string line) {
+void earthquake::set_eventid(string line) {
 
 	//stringstream eventID (line);
 	id = line;
@@ -64,7 +71,54 @@ string earthquake::get_eventid() {
 
 //**************************************************/
 
-void earthquake::set_date(earthquake & eq_info, ofstream & logfile, string & date, string & month, string & day, string & year, int & mm) {
+void earthquake::set_earthquake_name(string line) {
+
+	//stringstream eventID (line);
+	earthquake_name = line;
+	//eq_info.id = line;
+}
+
+string earthquake::get_earthquake_name() {
+	return earthquake_name;
+}
+
+//**************************************************/
+
+void earthquake::set_latitude(string Lat) {
+
+	latitude = atof(Lat.c_str());
+}
+
+double earthquake::get_latitude() {
+	return latitude;
+}
+
+//**************************************************/
+
+void earthquake::set_longitude(string Long) {
+
+	longitude = atof(Long.c_str());
+}
+
+double earthquake::get_longitude() {
+	return longitude;
+}
+
+//**************************************************/
+
+void earthquake::set_depth(string Depth) {
+
+	depth = latitude = atof(Depth.c_str());
+	//eq_info.id = line;
+}
+
+double earthquake::get_depth() {
+	return depth;
+}
+
+//**************************************************/
+
+void earthquake::set_date(ofstream & logfile, string & date, string & month, string & day, string & year, int & mm) {
 
 	int dd, yyyy;
 	stringstream month1, day1, year1;
@@ -250,7 +304,7 @@ void earthquake::set_magnitude_type(ofstream & logfile, string magnitude_type) {
 	//exit (EXIT_FAILURE);
 }
 
-string earthquake::get_mag_type2str(string magnitude_type) {
+string earthquake::get_mag_type2str(Mag_type magnitude_type) {
 
 	switch (magnitude_type) {
 
@@ -263,7 +317,7 @@ string earthquake::get_mag_type2str(string magnitude_type) {
 	exit(EXIT_FAILURE);
 }
 
-Mag_type earthquake::str2Mag_type(string b){
+Mag_type str2Mag_type(string & b){
 
 	string ss = uppercase(b);
 
@@ -277,3 +331,70 @@ Mag_type earthquake::str2Mag_type(string b){
 }
 
 //**************************************************/
+
+// Check the header of the input file
+bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
+
+	// Declare variable types:
+	// Date & Time variables ("mm/dd/yyyy or mm-dd-yyyy hh:mm:ss.fff time_zone"):
+
+	int mm;
+
+	string date, day, month, year, time, hour, minute, second;
+	string line, time_zone, magnitude_type, magnitude_size;
+	string longitude, latitude, depth;
+	stringstream longt, lat, dep;
+	ofstream logfile;
+
+	earthquake eq_info;
+
+	// Check data validation and storing them
+	// First line for event ID
+
+	getline(inputfile, line);
+
+	eq_info.set_eventid(line);
+
+	// Second line for date
+
+	inputfile >> date >> time >> time_zone;
+	eq_info.set_date(logfile, date, month, day, year, mm);
+
+	eq_info.set_time(logfile, time, hour, minute, second);
+
+	eq_info.set_time_zone(logfile, time_zone);
+
+	// Third line for earthquake name
+
+	inputfile.ignore();
+	getline(inputfile, line);
+	eq_info.set_earthquake_name(line);
+
+	// Fourth line for epicenter info
+
+	inputfile >> latitude;
+	eq_info.set_latitude(latitude);
+	inputfile >> longitude; 
+	eq_info.set_longitude(longitude);
+	inputfile >> depth;
+	eq_info.set_depth(depth);
+
+	inputfile >> magnitude_type;
+
+	eq_info.set_magnitude_type(logfile, magnitude_type);
+	//get_mag_type2str(eq_info, magnitude_type);
+
+	inputfile >> magnitude_size;
+	eq_info.set_magnitude_size(logfile, magnitude_size);
+
+	// Print the header in the outputfile:
+
+	//string a = month_num2enum(mm);
+
+	outputfile << "# " << " " << eq_info.get_Month_Num2namestr(month_num2enum(mm)) << " " << day << " " << year << " "
+		<< eq_info.get_time() << " " << eq_info.get_time_zone() << " " << eq_info.get_mag_type2str(str2Mag_type(magnitude_type)) << " " << eq_info.get_magnitude_size()
+		<< " " << eq_info.get_earthquake_name() << " " << "[" << eq_info.get_eventid() << "]" << "("
+		<< eq_info.get_longitude() << "," << " " << eq_info.get_latitude() << "," << " " << eq_info.get_depth() << ")" << "\n";
+
+	return 0;
+}

@@ -1,13 +1,27 @@
+# Makefile for golnaz.cpp
+
+CC = g++
+
+# Flags to the compiler
+
+CFLAGS = 
+
 all: golnaz
 
-golnaz: earthquake.o station.o golnaz.o 
-	g++ -o golnaz earthquake.o station.o golnaz.o
-	
-earthquake.o: earthquake.cpp
-	g++ -c earthquake.cpp
-	
+golnaz: golnaz.o mutualfunctions.o earthquake.o station.o LNK2005errorpass.o  
+	g++ -o golnaz golnaz.o mutualfunctions.o earthquake.o station.o LNK2005errorpass.o
+
+golnaz.o: golnaz.cpp
+	${CC} -c golnaz.cpp
+
+myFunction.o: myFunction.cpp
+	${CC} -c myFunction.cpp
+
+LNK2005errorpass.o: LNK2005errorpass.cpp
+	${CC} -c LNK2005errorpass.cpp
+
 station.o: station.cpp
-	g++ -c station.cpp	
-	
+	${CC} -c station.cpp 
+
 clean:
-	rm golnaz *.o
+	rm -rf *.o
