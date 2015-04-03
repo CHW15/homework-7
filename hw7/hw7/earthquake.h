@@ -4,11 +4,13 @@
 #ifndef EARTHQUAKE_H
 #define EARTHQUAKE_H
 
-//#include <cstring>
-#include "mutualfunctions.h"
-#include "LNK2005errorpass.h"
-
 //using namespace std;
+//#include <cstring>
+
+#include "mutualfunctions.h"
+//#include "LNK2005errorpass.h"
+
+
 
 enum Months {
 	January = 1, February, March, April, May, June, July,

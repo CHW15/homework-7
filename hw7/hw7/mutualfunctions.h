@@ -20,7 +20,7 @@
 //#include "earthquake.h"
 //#include "station.h"
 
-#include "LNK2005errorpass.h"
+//#include "LNK2005errorpass.h"
 
 static const int MAXvalidentry = 300;
 

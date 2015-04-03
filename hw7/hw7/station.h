@@ -4,10 +4,12 @@
 #ifndef STATION_H
 #define STATION_H
 
-//#include <cstring>
-#include "earthquake.h"
-#include "LNK2005errorpass.h"
 //#include "mutualfunctions.h"
+//#include <cstring>
+
+#include "earthquake.h"
+//#include "LNK2005errorpass.h"
+
 
 using namespace std;
 

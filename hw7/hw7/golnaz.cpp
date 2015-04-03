@@ -12,27 +12,9 @@
 
 // Calling external libraries
 
-/*
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <string>
-#include <ostream>
-#include <cstdlib>
-#include <sstream>
-#include <istream>
-#include <stdio.h>
-#include <vector>
-#include <stdlib.h>
-#include <numeric>
-#include <cstring>
-#include <cctype>
-*/
 
-//#include "mutualfunctions.h"
-//#include "earthquake.h"
 #include "station.h"
-#include "LNK2005errorpass.h"
+//#include "LNK2005errorpass.h"
 
 using namespace std;
 
@@ -42,6 +24,7 @@ int main() {
 
 	string inputfilename;
 	const string logfilename = "golnaz.log";
+	const string outputfilename = "golnaz.out";
 
 	string station_code;
 	ifstream inputfile;

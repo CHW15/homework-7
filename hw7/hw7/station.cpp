@@ -17,7 +17,7 @@
 */
 //#include "earthquake.h"
 #include "station.h"
-#include "LNK2005errorpass.h"
+//#include "LNK2005errorpass.h"
 //#include "mutualfunctions.h"
 
 //using namespace std;

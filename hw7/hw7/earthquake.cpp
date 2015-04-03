@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <string>
 #include <ostream>
 #include <cstdlib>
 #include <sstream>
@@ -14,9 +13,10 @@
 #include <cstring>
 #include <cctype>
 */
+
 #include "earthquake.h"
 #include "station.h"
-
+#include <string>
 
 using namespace std;
 
@@ -86,11 +86,11 @@ string earthquake::get_earthquake_name() {
 
 void earthquake::set_latitude(string Lat) {
 
-	latitude = atof(Lat.c_str());
+	this->latitude = atof(Lat.c_str());
 }
 
 double earthquake::get_latitude() {
-	return latitude;
+	return this->latitude;
 }
 
 //**************************************************/
@@ -108,7 +108,7 @@ double earthquake::get_longitude() {
 
 void earthquake::set_depth(string Depth) {
 
-	depth = latitude = atof(Depth.c_str());
+	depth = atof(Depth.c_str());
 	//eq_info.id = line;
 }
 
@@ -131,11 +131,11 @@ void earthquake::set_date(ofstream & logfile, string & date, string & month, str
 		month1 << month;
 		month1 >> mm;
 
-		string day = date.substr(3, 2);
+		day = date.substr(3, 2);
 		day1 << day;
 		day1 >> dd;
-		string year = date.substr(6, 4);
 
+		year = date.substr(6, 4);
 		year1 << year;
 		year1 >> yyyy;
 
@@ -162,7 +162,7 @@ void earthquake::set_date(ofstream & logfile, string & date, string & month, str
 			//exit (EXIT_FAILURE);
 		}
 
-		date = date;
+		this->date = date;
 
 		/*
 		Date.year = year;
@@ -226,7 +226,7 @@ void earthquake::set_time(ofstream & logfile, string time, string & hour, string
 			//exit (EXIT_FAILURE);
 		}
 
-		time = time;
+		this->time = time;
 
 		// (Or I could add another struct for time and use atoi(.c_str) command to convert the string into integer
 		// and but it needs more set and get functions which I prefered to learn compile and run completely
@@ -280,7 +280,7 @@ void earthquake::set_magnitude_size(ofstream & logfile, string magnitude_size) {
 		print_message(logfile, "Error: The magnitude_size is not valid");
 		//exit (EXIT_FAILURE);
 	} else {
-		magnitude_size = magnitude_size;
+		this->magnitude_size = magnitude_size;
 	}
 }
 
@@ -372,10 +372,10 @@ bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
 
 	// Fourth line for epicenter info
 
-	inputfile >> latitude;
-	eq_info.set_latitude(latitude);
 	inputfile >> longitude; 
 	eq_info.set_longitude(longitude);
+	inputfile >> latitude;
+	eq_info.set_latitude(latitude);
 	inputfile >> depth;
 	eq_info.set_depth(depth);
 
@@ -391,7 +391,7 @@ bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
 
 	//string a = month_num2enum(mm);
 
-	outputfile << "# " << " " << eq_info.get_Month_Num2namestr(month_num2enum(mm)) << " " << day << " " << year << " "
+	outputfile << "# " << " "  << day << " " << eq_info.get_Month_Num2namestr(month_num2enum(mm)) << " "<< " " << year << " "
 		<< eq_info.get_time() << " " << eq_info.get_time_zone() << " " << eq_info.get_mag_type2str(str2Mag_type(magnitude_type)) << " " << eq_info.get_magnitude_size()
 		<< " " << eq_info.get_earthquake_name() << " " << "[" << eq_info.get_eventid() << "]" << "("
 		<< eq_info.get_longitude() << "," << " " << eq_info.get_latitude() << "," << " " << eq_info.get_depth() << ")" << "\n";
