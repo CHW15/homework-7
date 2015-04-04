@@ -218,7 +218,7 @@ bool station::set_valid_Orientation(string orientation) {
 				}
 			}
 
-			orientation = ss;
+			this->orientation = ss;
 
 			return true;
 		}
@@ -229,7 +229,7 @@ bool station::set_valid_Orientation(string orientation) {
 				}
 			}
 
-			orientation = ss;
+			this->orientation = ss;
 
 			return true;
 		}
@@ -238,18 +238,18 @@ bool station::set_valid_Orientation(string orientation) {
 }
 
 string station::get_Orientation() {
-	return orientation;
+	return this->orientation;
 }
 
 // Check the table of reports from input file and return the signals output
-void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entry[MAXvalidentry], int  & valid_entries, int & invalidEntries, int & produced_signalnum) {
+void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entry[MAXvalidentry], int  & valid_entries, int & invalidEntries, int & produced_signalnum, int & i) {
 
 	int entry_pos = 0;
 
 	ofstream logfile;
 	string Net_code, Station_Name, band_Type, inst_type, orientation;
 	string string, temp_holder;
-	int i = 0;
+
 	// check the stored data validation
 
 	//inputfile >> temp_holder;
@@ -267,6 +267,7 @@ void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entr
 			m++;
 		} else {
 			entry[i].set_valid_Network_code(Net_code);
+		}
 
 			inputfile >> Station_Name;
 			if (!entry[i].set_valid_Station_code(Station_Name)) {
@@ -322,15 +323,15 @@ void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entr
 				valid_entries++;
 				produced_signalnum = produced_signalnum + orientation.size();
 
-				print_output(outputfile, logfile, entry, valid_entries, invalidEntries, produced_signalnum);
+				print_output(outputfile, logfile, entry, valid_entries, invalidEntries, produced_signalnum, i);
 
 			} else {
 				invalidEntries++;
 			}
 			i++;
-		}
+	}
 
-		outputfile << valid_entries << "\n";
+		//outputfile << valid_entries << "\n";
 		print_message(logfile, "invalid entries ignored:");
 		print_position(logfile, invalidEntries);
 		print_message(logfile, "\n");
@@ -342,29 +343,29 @@ void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entr
 		print_message(logfile, "\n");
 		print_message(logfile, "Finished!");
 		print_message(logfile, "\n");
+		logfile.close();
 
-	}
 }
 
-	void print_output(ofstream & outputfile, ofstream & logfile, station entry[MAXvalidentry], int & valid_entries, int & invalidEntries, int & produced_signalnum) {
+	void print_output(ofstream & outputfile, ofstream & logfile, station entry[MAXvalidentry], int & valid_entries, int & invalidEntries, int & produced_signalnum, int & i) {
 
 		// print all the signals to the output file
 
 		string orientation;
 
-		for (int i = 0; i < valid_entries; i++) {
+		//for (int i = 0; i < valid_entries; i++) {
 			orientation = entry[i].get_Orientation();
 
 			for (int j = 0; j < (int) orientation.length(); j++) {
 				stringstream records;
 				records << entry[i].get_Net_code2namestr() << "." ;
-				records << entry[i].get_Type_of_band2str() << ".";
-				records << entry[i].get_Station_code();
+				records << entry[i].get_Station_code() << ".";
+				records << entry[i].get_Type_of_band2str();
 				records << entry[i].get_Inst_Type2str();
 				//records << entry[i].get_Orientation() << "\n";
 				records << orientation[j] << "\n";
+				//records << endl;
 
 				outputfile << records.str();
 			}
 		}
-	}

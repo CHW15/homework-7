@@ -29,10 +29,11 @@ int main() {
 	string station_code;
 	ifstream inputfile;
 	ofstream outputfile, logfile;
-	station entry[MAXvalidentry];
+	static station entry[MAXvalidentry];
 	string net_code;
 
 	int valid_entries = 0, invalidEntries = 0, produced_signalnum = 0;
+	int i = 0;
 
 	// Generating the inputfile, outputfile and logfile
 
@@ -50,12 +51,13 @@ int main() {
 	print_message(logfile, "header is read successfully!");
 	print_message(logfile, "\n");
 
-	read_input_signals(inputfile, outputfile, entry, valid_entries, invalidEntries, produced_signalnum);
+	read_input_signals(inputfile, outputfile, entry, valid_entries, invalidEntries, produced_signalnum, i);
 	//print_output(outputfile, logfile, entry, valid_entries, invalidEntries, produced_signalnum);
 	print_message(logfile, "signals are read correctly!");
 
 	inputfile.close();
 	outputfile.close();
+	logfile.close();
 
 	//getchar();
 	return 0;
