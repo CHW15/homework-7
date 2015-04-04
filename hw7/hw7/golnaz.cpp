@@ -3,7 +3,7 @@
 * by Golnaz Sarram
 * March 20th, 2015
 
-* Github Repoitory: https://github.com/Golnaz15
+* Github Repoitory: https://github.com/Golnaz15/homework-7/tree/master/hw7/hw7
 
 * Homework Description:
 * This code will check a collection reports of earthquake event from sesmic stations
@@ -11,7 +11,6 @@
 ****************************************************************************************************/
 
 // Calling external libraries
-
 
 #include "station.h"
 #include "LNK2005errorpass.h"
@@ -23,7 +22,6 @@ using namespace std;
 int main() {
 
 	string inputfilename;
-	
 	const string outputfilename = "golnaz.out";
 
 	string station_code;
@@ -52,13 +50,10 @@ int main() {
 	print_message(logfile, "\n");
 
 	read_input_signals(inputfile, outputfile, entry, valid_entries, invalidEntries, produced_signalnum, i);
-	//print_output(outputfile, logfile, entry, valid_entries, invalidEntries, produced_signalnum);
 	print_message(logfile, "signals are read correctly!");
 
 	inputfile.close();
 	outputfile.close();
-	//logfile.close();
 
-	//getchar();
 	return 0;
 }

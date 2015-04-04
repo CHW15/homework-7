@@ -1,26 +1,9 @@
-/*
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <ostream>
-#include <cstdlib>
-#include <sstream>
-#include <istream>
-#include <stdio.h>
-#include <vector>
-#include <stdlib.h>
-#include <numeric>
-#include <cstring>
-#include <cctype>
-*/
 
 #include "earthquake.h"
 #include "station.h"
 #include <string>
 
 #include "LNK2005errorpass.h"
-
-using namespace std;
 
 string earthquake::get_Month_Num2namestr(Months aa) {
 	switch (aa) {
@@ -120,7 +103,7 @@ double earthquake::get_depth() {
 
 //**************************************************/
 
-void earthquake::set_date(ofstream & logfile, string & date, string & month, string & day, string & year, int & mm) {
+void earthquake::set_date(string & date, string & month, string & day, string & year, int & mm) {
 
 	int dd, yyyy;
 	stringstream month1, day1, year1;
@@ -141,19 +124,16 @@ void earthquake::set_date(ofstream & logfile, string & date, string & month, str
 		year1 << year;
 		year1 >> yyyy;
 
-		//cout << "m : " << mm << "d :" << dd << "y : " << yyyy <<"\n";
-		// Meanwhile month, day and year should be valid numbers
-
 		if (!isdigit(date[0]) || !isdigit(date[1]) || !isdigit(date[3]) || !isdigit(date[4])) {
 			print_message(logfile, "Error: Date of earthquake is not valid. ");
-			//exit (EXIT_FAILURE);
+			exit (EXIT_FAILURE);
 		}
 
 		if (!isdigit(date[6]) || !isdigit(date[7]) || !isdigit(date[8]) || !isdigit(date[9])) {
 			print_message(logfile, "Error: Date of earthquake is not valid. ");
-			//exit (EXIT_FAILURE);
+			exit (EXIT_FAILURE);
 		} else {
-			if (mm < 0 || mm > 13 || dd < 0 || dd > 32 || yyyy < 1850 || yyyy > 2016) {
+			if (mm < 1 || mm > 12 || dd < 1 || dd > 31 || yyyy < 1850 || yyyy > 2016) {
 				print_message(logfile, "Error: Date digits are not valid. ");
 				exit(EXIT_FAILURE);
 			}
@@ -161,7 +141,7 @@ void earthquake::set_date(ofstream & logfile, string & date, string & month, str
 
 		if ((date[2] != '/' || date[5] != '/') && (date[2] != '-' || date[5] != '-')) {
 			print_message(logfile, "Error: Date format is not valid. ");
-			//exit (EXIT_FAILURE);
+			exit (EXIT_FAILURE);
 		}
 
 		this->date = date;
@@ -184,7 +164,7 @@ string earthquake::get_date() {
 
 //**************************************************/
 
-void earthquake::set_time(ofstream & logfile, string time, string & hour, string & minute, string & second) {
+void earthquake::set_time(string time, string & hour, string & minute, string & second) {
 
 	int hr, min;
 	float  sec = 0;
@@ -251,7 +231,7 @@ string earthquake::get_time() {
 
 //**************************************************/
 
-void earthquake::set_time_zone(ofstream & logfile, string time_zone) {
+void earthquake::set_time_zone(string time_zone) {
 
 	int tzl = 0;
 	string str = time_zone;
@@ -259,7 +239,7 @@ void earthquake::set_time_zone(ofstream & logfile, string time_zone) {
 	tzl = strlen(cstr);
 	if ((tzl != 3) || (!isalpha(time_zone[0])) || (!isalpha(time_zone[1])) || (!isalpha(time_zone[2]))) {
 		print_message(logfile, "Error: Time_zone is not valid");
-		//exit (EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	} else {
 		timeZone = time_zone;
 	}
@@ -271,7 +251,7 @@ string earthquake::get_time_zone() {
 
 //**************************************************/
 
-void earthquake::set_magnitude_size(ofstream & logfile, string magnitude_size) {
+void earthquake::set_magnitude_size(string magnitude_size) {
 
 	int mag_size;
 	stringstream mg;
@@ -280,7 +260,7 @@ void earthquake::set_magnitude_size(ofstream & logfile, string magnitude_size) {
 
 	if (mag_size < 0) {
 		print_message(logfile, "Error: The magnitude_size is not valid");
-		//exit (EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	} else {
 		this->magnitude_size = magnitude_size;
 	}
@@ -292,18 +272,20 @@ string earthquake::get_magnitude_size() {
 
 //**************************************************/
 
-void earthquake::set_magnitude_type(ofstream & logfile, string magnitude_type) {
+void earthquake::set_magnitude_type(string magnitude_type) {
 
 	// cout << magnitude_type;
 	string mt = uppercase(magnitude_type);
-	
+
 	if (mt == "ML") { magnitude_type = ML; }
 	if (mt == "MS") { magnitude_type = Ms; }
 	if (mt == "MB") { magnitude_type = Mb; }
 	if (mt == "MW") { magnitude_type = Mw; }
 
-	//print_message(logfile, "Error: The magnitude_type is not valid");
-	//exit (EXIT_FAILURE);
+	else {
+		print_message(logfile, "Error: The magnitude_type is not valid");
+		exit (EXIT_FAILURE);
+	}
 }
 
 string earthquake::get_mag_type2str(Mag_type magnitude_type) {
@@ -316,7 +298,7 @@ string earthquake::get_mag_type2str(Mag_type magnitude_type) {
 	case Mw:  return "Mw";
 	}
 	// It should never get here!!
-	exit(EXIT_FAILURE);
+	//exit(EXIT_FAILURE);
 }
 
 Mag_type str2Mag_type(string & b){
@@ -329,7 +311,7 @@ Mag_type str2Mag_type(string & b){
 	if (ss == "MW")  return Mw;
 
 	// It should never get here!!
-	exit(EXIT_FAILURE);
+	//exit(EXIT_FAILURE);
 }
 
 //**************************************************/
@@ -346,7 +328,6 @@ bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
 	string line, time_zone, magnitude_type, magnitude_size;
 	string longitude, latitude, depth;
 	stringstream longt, lat, dep;
-	ofstream logfile;
 
 	earthquake eq_info;
 
@@ -360,11 +341,11 @@ bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
 	// Second line for date
 
 	inputfile >> date >> time >> time_zone;
-	eq_info.set_date(logfile, date, month, day, year, mm);
+	eq_info.set_date(date, month, day, year, mm);
 
-	eq_info.set_time(logfile, time, hour, minute, second);
+	eq_info.set_time(time, hour, minute, second);
 
-	eq_info.set_time_zone(logfile, time_zone);
+	eq_info.set_time_zone(time_zone);
 
 	// Third line for earthquake name
 
@@ -383,11 +364,11 @@ bool check_input_header(ifstream & inputfile, ofstream & outputfile) {
 
 	inputfile >> magnitude_type;
 
-	eq_info.set_magnitude_type(logfile, magnitude_type);
+	eq_info.set_magnitude_type(magnitude_type);
 	//get_mag_type2str(eq_info, magnitude_type);
 
 	inputfile >> magnitude_size;
-	eq_info.set_magnitude_size(logfile, magnitude_size);
+	eq_info.set_magnitude_size(magnitude_size);
 
 	// Print the header in the outputfile:
 

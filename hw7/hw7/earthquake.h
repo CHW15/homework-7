@@ -4,13 +4,8 @@
 #ifndef EARTHQUAKE_H
 #define EARTHQUAKE_H
 
-//using namespace std;
-//#include <cstring>
-
 #include "mutualfunctions.h"
 #include "LNK2005errorpass.h"
-
-
 
 enum Months {
 	January = 1, February, March, April, May, June, July,
@@ -32,11 +27,11 @@ public:
 	void set_latitude(string);
 	void set_longitude(string);
 	void set_depth(string);
-	void set_date(ofstream &, string &, string &, string &, string &, int &);
-	void set_time(ofstream &, string, string &, string &, string &);
-	void set_time_zone(ofstream &, string);
-	void set_magnitude_size(ofstream &, string);
-	void set_magnitude_type(ofstream &, string);
+	void set_date(string &, string &, string &, string &, int &);
+	void set_time(string, string &, string &, string &);
+	void set_time_zone(string);
+	void set_magnitude_size(string);
+	void set_magnitude_type(string);
 
 	double get_latitude();
 	double get_longitude();

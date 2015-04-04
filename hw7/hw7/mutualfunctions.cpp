@@ -1,26 +1,6 @@
-/*
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <string>
-#include <ostream>
-#include <cstdlib>
-#include <sstream>
-#include <istream>
-#include <stdio.h>
-#include <vector>
-#include <stdlib.h>
-#include <numeric>
-#include <cstring>
-#include <cctype>
-*/
-//#include "earthquake.h"
-//#include "station.h"
 
 #include "mutualfunctions.h"
 #include "LNK2005errorpass.h"
-
-//using namespace std;
 
 //================================ Declare functions =====================================/
 

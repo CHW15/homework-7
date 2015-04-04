@@ -1,26 +1,6 @@
 
-/*
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <string>
-#include <ostream>
-#include <cstdlib>
-#include <sstream>
-#include <istream>
-#include <stdio.h>
-#include <vector>
-#include <stdlib.h>
-#include <numeric>
-#include <cstring>
-#include <cctype>
-*/
-//#include "earthquake.h"
 #include "station.h"
 #include "LNK2005errorpass.h"
-//#include "mutualfunctions.h"
-
-//using namespace std;
 
 //**************************************************/
 
@@ -269,103 +249,103 @@ void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entr
 			entry[i].set_valid_Network_code(Net_code);
 		}
 
-			inputfile >> Station_Name;
-			if (!entry[i].set_valid_Station_code(Station_Name)) {
-				print_message(logfile, "Error: Entry # ");
-				print_position(logfile, entry_pos);
-				print_message(logfile, " ignored. Invalid_Station_code");
-				print_message(logfile, "\n");
-				m++;
+		inputfile >> Station_Name;
+		if (!entry[i].set_valid_Station_code(Station_Name)) {
+			print_message(logfile, "Error: Entry # ");
+			print_position(logfile, entry_pos);
+			print_message(logfile, " ignored. Invalid_Station_code");
+			print_message(logfile, "\n");
+			m++;
 
-			} else {
-				entry[i].set_valid_Station_code(Station_Name);
-			}
+		} else {
+			entry[i].set_valid_Station_code(Station_Name);
+		}
 
-			inputfile >> band_Type;
-			if (!entry[i].set_valid_Type_of_band(band_Type)) {
-				print_message(logfile, "Error: Entry # ");
-				print_position(logfile, entry_pos);
-				print_message(logfile, " ignored. Invalid Type_of_band");
-				print_message(logfile, "\n");
-				m++;
+		inputfile >> band_Type;
+		if (!entry[i].set_valid_Type_of_band(band_Type)) {
+			print_message(logfile, "Error: Entry # ");
+			print_position(logfile, entry_pos);
+			print_message(logfile, " ignored. Invalid Type_of_band");
+			print_message(logfile, "\n");
+			m++;
 
-			} else {
-				entry[i].set_valid_Type_of_band(band_Type);     
-			}
+		} else {
+			entry[i].set_valid_Type_of_band(band_Type);     
+		}
 
-			inputfile >> inst_type;
-			if (!entry[i].set_valid_Type_of_instrument(inst_type)) {
-				print_message(logfile, "Error: Entry # ");
-				print_position(logfile, entry_pos);
-				print_message(logfile, " ignored. Invalid Type_of_band");
-				print_message(logfile, "\n");
-				m++;
+		inputfile >> inst_type;
+		if (!entry[i].set_valid_Type_of_instrument(inst_type)) {
+			print_message(logfile, "Error: Entry # ");
+			print_position(logfile, entry_pos);
+			print_message(logfile, " ignored. Invalid Type_of_band");
+			print_message(logfile, "\n");
+			m++;
 
-			} else { 
+		} else { 
 
-				entry[i].set_valid_Type_of_instrument(inst_type);
-			}
+			entry[i].set_valid_Type_of_instrument(inst_type);
+		}
 
-			inputfile >> orientation;
-			if (!entry[i].set_valid_Orientation(orientation)) {
-				print_message(logfile, "Error: Entry # ");
-				print_position(logfile, entry_pos);
-				print_message(logfile, " ignored. as an invalid Orientation");
-				print_message(logfile, "\n");
-				m++;
+		inputfile >> orientation;
+		if (!entry[i].set_valid_Orientation(orientation)) {
+			print_message(logfile, "Error: Entry # ");
+			print_position(logfile, entry_pos);
+			print_message(logfile, " ignored. as an invalid Orientation");
+			print_message(logfile, "\n");
+			m++;
 
-			} else {
-				entry[i].set_valid_Orientation(orientation);
-			}
+		} else {
+			entry[i].set_valid_Orientation(orientation);
+		}
 
-			if (m == -1) {
+		if (m == -1) {
 
-				valid_entries++;
-				produced_signalnum = produced_signalnum + orientation.size();
+			valid_entries++;
+			produced_signalnum = produced_signalnum + orientation.size();
 
-				print_output(outputfile, logfile, entry, valid_entries, invalidEntries, produced_signalnum, i);
+			print_output(outputfile, logfile, entry, valid_entries, invalidEntries, produced_signalnum, i);
 
-			} else {
-				invalidEntries++;
-			}
-			i++;
+		} else {
+			invalidEntries++;
+		}
+		i++;
 	}
 
-		//outputfile << valid_entries << "\n";
-		print_message(logfile, "invalid entries ignored:");
-		print_position(logfile, invalidEntries);
-		print_message(logfile, "\n");
-		print_message(logfile, "valid entries read:");
-		print_position(logfile, valid_entries);
-		print_message(logfile, "\n");
-		print_message(logfile, "signal name produced:");
-		print_position(logfile, produced_signalnum);
-		print_message(logfile, "\n");
-		print_message(logfile, "Finished!");
-		print_message(logfile, "\n");
-		//logfile.close();
+	//outputfile << produced_signalnum << "\n";
+	print_message(logfile, "invalid entries ignored:");
+	print_position(logfile, invalidEntries);
+	print_message(logfile, "\n");
+	print_message(logfile, "valid entries read:");
+	print_position(logfile, valid_entries);
+	print_message(logfile, "\n");
+	print_message(logfile, "signal name produced:");
+	print_position(logfile, produced_signalnum);
+	print_message(logfile, "\n");
+	print_message(logfile, "Finished!");
+	print_message(logfile, "\n");
+	//logfile.close();
 
 }
 
-	void print_output(ofstream & outputfile, ofstream & logfile, station entry[MAXvalidentry], int & valid_entries, int & invalidEntries, int & produced_signalnum, int & i) {
+void print_output(ofstream & outputfile, ofstream & logfile, station entry[MAXvalidentry], int & valid_entries, int & invalidEntries, int & produced_signalnum, int & i) {
 
-		// print all the signals to the output file
+	// print all the signals to the output file
 
-		string orientation;
+	string orientation;
 
-		//for (int i = 0; i < valid_entries; i++) {
-			orientation = entry[i].get_Orientation();
+	//for (int i = 0; i < valid_entries; i++) {
+	orientation = entry[i].get_Orientation();
 
-			for (int j = 0; j < (int) orientation.length(); j++) {
-				stringstream records;
-				records << entry[i].get_Net_code2namestr() << "." ;
-				records << entry[i].get_Station_code() << ".";
-				records << entry[i].get_Type_of_band2str();
-				records << entry[i].get_Inst_Type2str();
-				//records << entry[i].get_Orientation() << "\n";
-				records << orientation[j] << "\n";
-				//records << endl;
+	for (int j = 0; j < (int) orientation.length(); j++) {
+		stringstream records;
+		records << entry[i].get_Net_code2namestr() << "." ;
+		records << entry[i].get_Station_code() << ".";
+		records << entry[i].get_Type_of_band2str();
+		records << entry[i].get_Inst_Type2str();
+		//records << entry[i].get_Orientation() << "\n";
+		records << orientation[j] << "\n";
+		//records << endl;
 
-				outputfile << records.str();
-			}
-		}
+		outputfile << records.str();
+	}
+}

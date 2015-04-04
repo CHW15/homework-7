@@ -17,14 +17,11 @@
 #include <cstring>
 #include <cctype>
 
-//#include "earthquake.h"
-//#include "station.h"
-
 #include "LNK2005errorpass.h"
 
-static const int MAXvalidentry = 300;
-
 using namespace std;
+
+static const int MAXvalidentry = 300;
 
 void open_file(ofstream &, ostream &, string);
 void open_input(ifstream &, ofstream &, ostream &, string);
