@@ -18,6 +18,8 @@
 #include "station.h"
 #include <string>
 
+#include "LNK2005errorpass.h"
+
 using namespace std;
 
 string earthquake::get_Month_Num2namestr(Months aa) {

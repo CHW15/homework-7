@@ -8,7 +8,7 @@
 //#include <cstring>
 
 #include "mutualfunctions.h"
-//#include "LNK2005errorpass.h"
+#include "LNK2005errorpass.h"
 
 
 

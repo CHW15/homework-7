@@ -2,6 +2,6 @@
 
 #include "LNK2005errorpass.h"
 
-string outputfilename = "golnaz.out";
-ofstream outputfile;
+string logfilename = "golnaz.log";
+ofstream logfile;
 

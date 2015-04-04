@@ -6,7 +6,7 @@
 
 using namespace std;
 
-extern string outputfilename;
+extern string logfilename;
 extern ofstream logfile;
 
 #endif

@@ -8,7 +8,7 @@
 //#include <cstring>
 
 #include "earthquake.h"
-//#include "LNK2005errorpass.h"
+#include "LNK2005errorpass.h"
 
 
 using namespace std;

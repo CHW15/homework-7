@@ -1,3 +1,10 @@
 processing input...
 header is read successfully!
+Error: Entry # 2 ignored. Invalid_Network_code
+Error: Entry # 2 ignored. Invalid Type_of_band
+Error: Entry # 5 ignored. Invalid_Station_code
+invalid entries ignored:2
+valid entries read:3
+signal name produced:6
+Finished!
 signals are read correctly!

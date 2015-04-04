@@ -14,7 +14,7 @@
 
 
 #include "station.h"
-//#include "LNK2005errorpass.h"
+#include "LNK2005errorpass.h"
 
 using namespace std;
 
@@ -23,12 +23,12 @@ using namespace std;
 int main() {
 
 	string inputfilename;
-	const string logfilename = "golnaz.log";
+	
 	const string outputfilename = "golnaz.out";
 
 	string station_code;
 	ifstream inputfile;
-	ofstream outputfile, logfile;
+	ofstream outputfile; //logfile;
 	static station entry[MAXvalidentry];
 	string net_code;
 
@@ -57,7 +57,7 @@ int main() {
 
 	inputfile.close();
 	outputfile.close();
-	logfile.close();
+	//logfile.close();
 
 	//getchar();
 	return 0;

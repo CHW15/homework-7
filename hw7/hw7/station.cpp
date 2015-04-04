@@ -17,7 +17,7 @@
 */
 //#include "earthquake.h"
 #include "station.h"
-//#include "LNK2005errorpass.h"
+#include "LNK2005errorpass.h"
 //#include "mutualfunctions.h"
 
 //using namespace std;
@@ -246,7 +246,7 @@ void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entr
 
 	int entry_pos = 0;
 
-	ofstream logfile;
+	//ofstream logfile;
 	string Net_code, Station_Name, band_Type, inst_type, orientation;
 	string string, temp_holder;
 
@@ -343,7 +343,7 @@ void read_input_signals(ifstream & inputfile, ofstream& outputfile, station entr
 		print_message(logfile, "\n");
 		print_message(logfile, "Finished!");
 		print_message(logfile, "\n");
-		logfile.close();
+		//logfile.close();
 
 }
 
